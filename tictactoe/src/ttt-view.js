@@ -7,10 +7,10 @@ class View {
   }
 
   bindEvents() {
+    let that = this;
     this.$el.on("click", "li", function (event) {
-      const $square = $(event.currentTarget); //event.target for li ?
-      debugger
-      this.makeMove($square);
+      const $square = $(event.currentTarget); 
+      that.makeMove($square);
     });
   }
 
@@ -21,9 +21,32 @@ class View {
   // display the 'X's and 'O's in different colors. 
   makeMove($square) {
     let pos = $square.data("pos");
-    this.game.playMove(pos);
-
     let currentPlayerMark = this.game.currentPlayer; // 'x' or 'o'
+
+    try {
+      this.game.playMove(pos);
+    } catch(e){
+      alert(e.msg);
+    }
+    
+    $square.addClass(currentPlayerMark);
+
+    if (this.game.isOver()) {
+      const winner = this.game.winner(); //'x' or 'o'
+      let $p = $("<p>");
+      // debugger
+      if (winner === 'x') {
+        this.$el.addClass('winner-x');
+        $p.html('You win, x!');
+      } else if (winner === 'o'){
+        this.$el.addClass('winner-o');
+        $p.html('You win, o!');
+      } else {
+        this.$el.addClass('draw');
+        $p.html("It's a draw!");
+      }
+      this.$el.append($p);
+    }
   }
 
   setupBoard() {

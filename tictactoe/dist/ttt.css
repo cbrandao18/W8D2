@@ -42,3 +42,31 @@ li {
 li:hover {
     background-color: yellow;
 }
+
+.x, .o {
+    background-color: white;
+    color: black;
+    font-size: 60px;
+    line-height: 90px;
+}
+
+.x:after {
+    content: "x";
+}
+
+.o:after {
+    content: "o";
+}
+
+.winner-x .x, .winner-o .o {
+    background-color: green;
+    color: white;
+}
+
+.winner-x .o, .winner-o .x, .draw li {
+    color: red;
+}
+
+p {
+    font-size: 35px;
+}
